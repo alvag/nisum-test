@@ -1,0 +1,12 @@
+.mat-mdc-snack-bar-container {
+  &.error-alert {
+    --mdc-snackbar-container-color : #EF4444;
+    --mat-snack-bar-button-color   : white;
+  }
+
+  &.success-alert {
+    --mdc-snackbar-container-color : #139D46;
+    --mat-snack-bar-button-color   : white;
+  }
+}
+

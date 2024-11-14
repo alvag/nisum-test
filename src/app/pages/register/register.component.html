@@ -1,0 +1,91 @@
+<div class="min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <app-card [title]="'¡Bienvenido!'" [subtitle]="'Crea tu cuenta para comenzar'">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+
+        <mat-form-field class="w-full">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" placeholder="Ingresa tu nombre">
+          @if (registerForm.controls.name.hasError( 'required' ) && registerForm.controls.name.touched) {
+            <mat-error>
+              El nombre es requerido
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput formControlName="email" placeholder="ejemplo@correo.com" type="email">
+          @if (registerForm.controls.email.hasError( 'required' ) && registerForm.controls.email.touched) {
+            <mat-error>
+              El correo es requerido
+            </mat-error>
+          }
+          @if (registerForm.controls.email.hasError( 'email' ) && registerForm.controls.email.touched) {
+            <mat-error>
+              Ingresa un correo válido
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="********">
+          @if (registerForm.controls.password.hasError( 'required' ) && registerForm.controls.password.touched) {
+            <mat-error>
+              La contraseña es requerida
+            </mat-error>
+          }
+          @if (registerForm.controls.password.hasError( 'minlength' ) && registerForm.controls.password.touched) {
+            <mat-error>
+              La contraseña debe tener al menos 6 caracteres
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" placeholder="********">
+          @if (registerForm.controls.confirmPassword.hasError( 'required' ) && registerForm.controls.confirmPassword.touched) {
+            <mat-error>
+              La confirmación de contraseña es requerida
+            </mat-error>
+          }
+          @if (registerForm.controls.confirmPassword.hasError( 'minlength' ) && registerForm.controls.confirmPassword.touched) {
+            <mat-error>
+              La contraseña debe tener al menos 6 caracteres
+            </mat-error>
+          }
+          @if (registerForm.controls.confirmPassword.touched &&
+          registerForm.controls.password.value !== registerForm.controls.confirmPassword.value) {
+            <mat-error>
+              Las contraseñas no coinciden
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                class="w-full mt-4"
+                [disabled]="isLoading() || registerForm.invalid">
+          @if (isLoading()) {
+            <div class="flex items-center justify-center gap-2">
+              <mat-spinner diameter="20"></mat-spinner>
+              <span>Registrando...</span>
+            </div>
+          } @else {
+            <span>Registrarse</span>
+          }
+        </button>
+
+        <div class="text-center mt-4">
+          <a routerLink="/login" class="text-blue-600 hover:text-blue-800">
+            ¿Ya tienes cuenta? Inicia sesión
+          </a>
+        </div>
+      </form>
+    </app-card>
+  </div>
+
+</div>
