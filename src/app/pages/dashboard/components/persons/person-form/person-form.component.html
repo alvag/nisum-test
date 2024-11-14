@@ -1,0 +1,92 @@
+<button mat-icon-button
+        (click)="onBack()"
+        class="mb-2"
+        color="primary">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+<h1 class="text-2xl font-semibold text-primary mb-4">{{ title() }}</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+  <!-- Grid container -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Nombre -->
+    <mat-form-field class="w-full">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="first_name" required>
+      @if (form.hasError( 'required', 'first_name' )) {
+        <mat-error>El nombre es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Apellido -->
+    <mat-form-field class="w-full">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="last_name" required>
+      @if (form.hasError( 'required', 'last_name' )) {
+        <mat-error>El apellido es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Fecha de inicio -->
+    <mat-form-field class="w-full">
+      <mat-label>Fecha de inicio</mat-label>
+      <input matInput
+             formControlName="startDate"
+             [matDatepicker]="startDate"
+             (click)="startDate.open()"
+             readonly
+             required>
+      <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+      <mat-datepicker #startDate></mat-datepicker>
+      @if (form.hasError( 'required', 'startDate' )) {
+        <mat-error>La fecha de inicio es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Fecha de Término -->
+    <mat-form-field class="w-full">
+      <mat-label>Fecha de Término</mat-label>
+      <input matInput
+             formControlName="endDate"
+             [matDatepicker]="endDate"
+             (click)="endDate.open()"
+             readonly
+             required>
+      <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+      <mat-datepicker #endDate></mat-datepicker>
+      @if (form.hasError( 'required', 'endDate' )) {
+        <mat-error>La fecha de término es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field class="w-full md:col-span-2">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput
+             formControlName="email"
+             type="email"
+             required>
+      @if (form.hasError( 'required', 'email' )) {
+        <mat-error>El correo es requerido</mat-error>
+      }
+      @if (form.hasError( 'email', 'email' )) {
+        <mat-error>Ingrese un correo válido</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-end gap-2 mt-4">
+    <button mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="form.invalid || isLoading()">
+      @if (isLoading()) {
+        <div class="flex items-center gap-2">
+          <mat-spinner diameter="20"></mat-spinner>
+          <span>Guardando...</span>
+        </div>
+      } @else {
+        <span>Guardar</span>
+      }
+    </button>
+  </div>
+</form>

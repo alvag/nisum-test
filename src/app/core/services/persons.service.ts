@@ -7,8 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 } )
 export class PersonsService {
-  private http = inject( HttpClient );
-  private apiUrl = 'https://reqres.in/api/users';
+  private readonly http = inject( HttpClient );
+  private readonly apiUrl = 'https://reqres.in/api/users';
 
   customPersonsSubject = new BehaviorSubject<CustomPerson[]>( [] );
   customPersons$ = this.customPersonsSubject.asObservable();

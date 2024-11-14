@@ -3,7 +3,6 @@ export type Person = {
   email: string;
   first_name: string;
   last_name: string;
-  avatar: string;
 }
 
 export type ResponsePerson = {
@@ -15,7 +14,7 @@ export type ResponsePerson = {
 }
 
 export type CustomPerson = Person & {
-  startDate?: string;
-  endDate?: string;
-  createdAt?: string;
+  startDate?: Date;
+  endDate?: Date;
+  createdAt?: Date;
 }

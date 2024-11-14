@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { MatIconAnchor, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { pipe } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component( {
   selector: 'app-custom-persons-table',
@@ -27,7 +28,8 @@ import { pipe } from 'rxjs';
     MatHeaderRow,
     MatHeaderRowDef,
     MatRow,
-    MatRowDef
+    MatRowDef,
+    DatePipe
   ],
   templateUrl: './custom-persons-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -47,11 +49,8 @@ export class PersonsCustomTableComponent implements OnInit {
     this.personService.customPersons$
     .pipe( takeUntilDestroyed( this.destroyRef ) )
     .subscribe( persons => {
-      console.log( persons );
       this.persons = persons;
       this.total = persons.length;
-
-      console.log( this.persons.slice( ( this.page - 1 ) * this.per_page, ( this.page - 1 ) * this.per_page + this.per_page ) );
 
       this.sliceDocuments.set( this.persons.slice( ( this.page - 1 ) * this.per_page, ( this.page - 1 ) * this.per_page + this.per_page ) );
     } );

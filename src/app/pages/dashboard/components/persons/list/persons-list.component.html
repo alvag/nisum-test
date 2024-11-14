@@ -1,14 +1,14 @@
 <div class="flex justify-between items-center">
-  <h1 class="text-2xl font-semibold text-primary mb-1">Listado de usuarios</h1>
+  <h1 class="text-2xl font-semibold text-primary mb-1">Listado de personas</h1>
 
-  <button mat-raised-button class="w-[150px]">Registrar</button>
+  <button mat-raised-button class="w-[150px]" routerLink="create">Registrar</button>
 </div>
 
 <mat-tab-group class="mt-8">
-  <mat-tab label="Usuarios Originales">
-    <app-persons-table/>
-  </mat-tab>
-  <mat-tab label="Usuarios Editados">
+  <mat-tab label="Registros Editados">
     <app-custom-persons-table/>
+  </mat-tab>
+  <mat-tab label="Registros Originales">
+    <app-persons-table/>
   </mat-tab>
 </mat-tab-group>

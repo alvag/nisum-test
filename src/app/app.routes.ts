@@ -22,6 +22,10 @@ export const routes: Routes = [
       {
         path: 'persons',
         loadComponent: () => import('@/pages/dashboard/components/persons/list/persons-list.component'),
+      },
+      {
+        path: 'persons/create',
+        loadComponent: () => import('@/pages/dashboard/components/persons/person-form/person-form.component')
       }
     ]
   },
