@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomPerson, PersonForm } from '@/core/models';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
@@ -12,6 +12,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Location } from '@angular/common';
 import { NotificationService, PersonsService } from '@/core/services';
 import { Router } from '@angular/router';
+
 const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY-M-D',
@@ -49,14 +50,27 @@ const MY_FORMATS = {
 
   ]
 } )
-export default class PersonFormComponent {
+export default class PersonFormComponent implements OnInit {
   private readonly location = inject( Location );
   private readonly personService = inject( PersonsService );
   private readonly router = inject( Router );
   private readonly notificationService = inject( NotificationService );
+
+  @Input() id!: string;
+
   form: FormGroup<PersonForm> = new FormGroup( new PersonForm() );
 
   title = signal( 'Registrar Usuario' );
+
+  ngOnInit() {
+    if ( this.id ) {
+      this.title.set( 'Editar Usuario' );
+      this.personService.getPersonById( +this.id ).subscribe( person => {
+        this.form.patchValue( person );
+      } );
+    }
+  }
+
   isLoading = signal( false );
 
   onSubmit() {
@@ -66,8 +80,8 @@ export default class PersonFormComponent {
     }
 
     this.personService.setCustomPerson( person as CustomPerson );
-    this.notificationService.success( 'Usuario registrado correctamente' );
-    this.router.navigate( [ '/dashboard/persons' ] );
+    this.notificationService.success( 'Datos registrados correctamente' );
+    this.router.navigate( ['/dashboard/persons'] );
   }
 
   onBack() {

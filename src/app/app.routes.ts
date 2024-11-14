@@ -26,6 +26,14 @@ export const routes: Routes = [
       {
         path: 'persons/create',
         loadComponent: () => import('@/pages/dashboard/components/persons/person-form/person-form.component')
+      },
+      {
+        path: 'persons/edit/:id',
+        loadComponent: () => import('@/pages/dashboard/components/persons/person-form/person-form.component')
+      },
+      {
+        path: 'persons/:id',
+        loadComponent: () => import('@/pages/dashboard/components/persons/person-details/person-details.component')
       }
     ]
   },

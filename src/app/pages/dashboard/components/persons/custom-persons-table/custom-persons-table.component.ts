@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { PersonsService } from '@/core/services';
+import { NotificationService, PersonsService } from '@/core/services';
 import { CustomPerson, ResponsePerson } from '@/core/models';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -37,6 +37,7 @@ import { DatePipe } from '@angular/common';
 export class PersonsCustomTableComponent implements OnInit {
   private destroyRef = inject( DestroyRef );
   private personService = inject( PersonsService );
+  private notificationService = inject( NotificationService );
   page = 1;
   per_page = 3;
   total = 0;
@@ -60,5 +61,10 @@ export class PersonsCustomTableComponent implements OnInit {
   pageEvt( event: PageEvent ) {
     this.page = event.pageIndex + 1;
     this.per_page = event.pageSize;
+  }
+
+  deletePerson( id: number ) {
+    this.personService.deletePerson( id );
+    this.notificationService.success( 'Usuario eliminado correctamente' );
   }
 }
