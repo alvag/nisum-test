@@ -1,0 +1,53 @@
+<div class="mat-elevation-z8">
+  @if (sliceDocuments().length) {
+    <table class="w-100" mat-table [dataSource]="sliceDocuments()">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID</th>
+        <td mat-cell *matCellDef="let element"> {{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email</th>
+        <td mat-cell *matCellDef="let element"> {{ element.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="first_name">
+        <th mat-header-cell *matHeaderCellDef> Nombre</th>
+        <td mat-cell *matCellDef="let element"> {{ element.first_name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef> Apellidos</th>
+        <td mat-cell *matCellDef="let element"> {{ element.last_name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fchnac">
+        <th mat-header-cell *matHeaderCellDef> Fecha Nac.</th>
+        <td mat-cell *matCellDef="let element"> {{ element.fchnac }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fchtermino">
+        <th mat-header-cell *matHeaderCellDef> Fecha Termino</th>
+        <td mat-cell *matCellDef="let element"> {{ element.fchtermino }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" class="text-center">
+          <button [routerLink]="['/user', element.id]" mat-icon-button title="Ver detalles">
+            <mat-icon>perm_contact_calendar</mat-icon>
+          </button>
+          <a [routerLink]="['/user', element.id, 'edit']" mat-icon-button title="Editar">
+            <mat-icon>edit</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </table>
+
+    <mat-paginator (page)="pageEvt($event)" [length]="total" [pageSizeOptions]="[3, 6, 9, 12]" showFirstLastButtons></mat-paginator>
+  }
+</div>
