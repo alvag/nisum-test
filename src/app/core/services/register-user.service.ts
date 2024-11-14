@@ -1,55 +1,41 @@
 import { Injectable } from '@angular/core';
 import { User } from '@/core/models';
 import { delay, Observable, of, throwError } from 'rxjs';
+import { UserStorage } from '@/core/utils/user-storage.utils';
 
 @Injectable( {
   providedIn: 'root'
 } )
 export class RegisterUserService {
-  private static readonly usersKey = 'nisum_users';
-
-  static registerDefaultUser() {
-    const defaultUser = { id: new Date().getTime(), name: 'Max Alva', email: 'max@gmail.com', password: 'password' };
-
-
-    let users = JSON.parse( localStorage.getItem( this.usersKey ) ?? '[]' );
-
-    if ( !Array.isArray( users ) ) {
-      users = [];
-    }
-
-    if ( users.length === 0 ) {
-      users.push( defaultUser );
-      localStorage.setItem( this.usersKey, JSON.stringify( users ) );
-    }
-  }
-
-  getUserByEmail( email: string ): User | null {
-    const users: User[] = JSON.parse( localStorage.getItem( RegisterUserService.usersKey ) ?? '[]' );
-    return users.find( u => u.email?.toLowerCase() === email.toLowerCase() ) ?? null;
-  }
 
   addUser( userData: User ): Observable<User> {
-    const users: User[] = JSON.parse( localStorage.getItem( RegisterUserService.usersKey ) ?? '[]' );
+    return new Observable( subscriber => {
+      // Verificar si el email ya existe
+      if ( UserStorage.getUserByEmail( userData.email?.toLowerCase() ?? '' ) ) {
+        setTimeout( () => {
+          subscriber.error( new Error( 'El email ya está registrado' ) );
+          subscriber.complete();
+        }, 2000 );
+        return;
+      }
 
-    // Verificar si el email ya existe
-    if ( users.some( u => u.email?.toLowerCase() === userData.email?.toLowerCase() ) ) {
-      return throwError( () => new Error( 'El email ya está registrado' ) ).pipe(
-        delay( 2000 ) // Simulamos delay en el error también
-      );
-    }
+      // Crear nuevo usuario
+      const newUser: User = {
+        ...userData,
+        id: new Date().getTime()
+      };
 
-    const newUser: User = {
-      ...userData,
-      id: new Date().getTime()
-    };
-
-    users.push( newUser );
-    localStorage.setItem( RegisterUserService.usersKey, JSON.stringify( users ) );
-
-    // Retornamos observable con delay de 2 segundos para simular una llamada a un endpoint
-    return of( newUser ).pipe(
-      delay( 2000 )
-    );
+      // Simulamos una operación asíncrona
+      setTimeout( () => {
+        try {
+          UserStorage.addUser( newUser );
+          subscriber.next( newUser );
+          subscriber.complete();
+        } catch ( error ) {
+          subscriber.error( error );
+          subscriber.complete();
+        }
+      }, 2000 );
+    } );
   }
 }

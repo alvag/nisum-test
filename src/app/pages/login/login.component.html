@@ -1,0 +1,64 @@
+<div class="min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <app-card
+      title="¡Bienvenido de nuevo!"
+      subtitle="Ingresa tus credenciales para continuar">
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+        <mat-form-field class="w-full">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput
+                 formControlName="email"
+                 placeholder="ejemplo@correo.com"
+                 type="email"
+                 autocomplete="email">
+          @if (loginForm.controls.email.hasError( 'required' ) && loginForm.controls.email.touched) {
+            <mat-error>
+              El correo es requerido
+            </mat-error>
+          }
+          @if (loginForm.controls.email.hasError( 'email' ) && loginForm.controls.email.touched) {
+            <mat-error>
+              Ingresa un correo válido
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Contraseña</mat-label>
+          <input matInput
+                 formControlName="password"
+                 type="password"
+                 placeholder="********"
+                 autocomplete="current-password">
+          @if (loginForm.controls.password.hasError( 'required' ) && loginForm.controls.password.touched) {
+            <mat-error>
+              La contraseña es requerida
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                class="w-full"
+                [disabled]="isLoading() || loginForm.invalid">
+          @if (isLoading()) {
+            <div class="flex items-center justify-center gap-2">
+              <mat-spinner diameter="20"></mat-spinner>
+              <span>Iniciando sesión...</span>
+            </div>
+          } @else {
+            <span>Iniciar sesión</span>
+          }
+        </button>
+
+        <div class="text-center mt-4">
+          <a routerLink="/register" class="text-blue-600 hover:text-blue-800">
+            ¿No tienes cuenta? Regístrate
+          </a>
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>

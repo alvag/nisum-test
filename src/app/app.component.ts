@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RegisterUserService } from '@/core/services';
+import { UserStorage } from '@/core/utils/user-storage.utils';
 
 @Component( {
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    RegisterUserService.registerDefaultUser();
+    UserStorage.registerDefaultUser();
   }
 
 }

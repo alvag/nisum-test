@@ -9,7 +9,7 @@ export class NotificationService {
   private readonly snackBar = inject( MatSnackBar );
 
   private readonly defaultConfig: MatSnackBarConfig = {
-    duration: 50000,
+    duration: 5000,
     horizontalPosition: 'center',
     verticalPosition: 'bottom',
   };
