@@ -34,6 +34,10 @@ export const routes: Routes = [
       {
         path: 'persons/:id',
         loadComponent: () => import('@/pages/dashboard/components/persons/person-details/person-details.component')
+      },
+      {
+        path: 'profile',
+        loadComponent: () => import('@/pages/dashboard/components/profile/profile.component')
       }
     ]
   },

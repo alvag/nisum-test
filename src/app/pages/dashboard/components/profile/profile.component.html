@@ -1,0 +1,50 @@
+<h1 class="text-2xl font-semibold text-gray-800 mb-8">Edita tu perfil</h1>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 max-w-md">
+  <!-- Nombre -->
+  <mat-form-field class="w-full">
+    <mat-label>Nombre</mat-label>
+    <input matInput
+           formControlName="name"
+           required>
+    @if (profileForm.hasError( 'name', 'required' ) && profileForm.get( 'name' )?.touched) {
+      <mat-error>El nombre es requerido</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Email -->
+  <mat-form-field class="w-full">
+    <mat-label>Correo electrónico</mat-label>
+    <input matInput
+           formControlName="email"
+           type="email"
+           required>
+    @if (profileForm.hasError( 'email', 'required' ) && profileForm.get( 'email' )?.touched) {
+      <mat-error>El correo es requerido</mat-error>
+    }
+    @if (profileForm.hasError( 'email', 'email' )) {
+      <mat-error>Ingrese un correo válido</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Contraseña -->
+  <mat-form-field class="w-full">
+    <mat-label>Contraseña</mat-label>
+    <input matInput
+           formControlName="password"
+           [type]="'password'">
+
+    @if (profileForm.hasError( 'password', 'required' ) && profileForm.get( 'password' )?.touched) {
+      <mat-error>La contraseña es requerida</mat-error>
+    }
+  </mat-form-field>
+
+  <div class="flex justify-end gap-2 mt-4">
+    <button mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!profileForm.valid">
+      Guardar cambios
+    </button>
+  </div>
+</form>

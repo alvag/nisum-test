@@ -15,7 +15,7 @@
       </div>
 
       <div class="flex-1 flex items-center justify-end px-4">
-        <div mat-button [matMenuTriggerFor]="profileMenu" class="flex items-center flex-nowrap">
+        <div mat-button [matMenuTriggerFor]="profileMenu" class="flex items-center flex-nowrap cursor-pointer">
           <img src="https://ui-avatars.com/api/?name={{(user$ | async)?.name}}"
                class="w-8 h-8 rounded-full mr-2"
                alt="Profile">
@@ -45,7 +45,7 @@
 </div>
 
 <mat-menu #profileMenu="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/dashboard/profile">
     <mat-icon>person</mat-icon>
     <span>Perfil</span>
   </button>

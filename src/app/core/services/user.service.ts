@@ -13,4 +13,9 @@ export class UserService {
   constructor() {
     this.userSubject.next( UserStorage.getLoggedUser() );
   }
+
+  updateUser( user: User ) {
+    UserStorage.setLoggedUser( user );
+    this.userSubject.next( user );
+  }
 }
